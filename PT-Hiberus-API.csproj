@@ -30,6 +30,7 @@
     <None Remove="Domain\IRepositories\" />
     <None Remove="Domain\IServices\" />
     <None Remove="Services\" />
+    <None Remove="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -41,5 +42,6 @@
     <Folder Include="Domain\IRepositories\" />
     <Folder Include="Domain\IServices\" />
     <Folder Include="Services\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>

@@ -12,12 +12,13 @@ using PT_Hiberus_API.Utils;
 namespace PT_Hiberus_API.Controllers
 {
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class LoginController : ControllerBase
     {
-        private readonly IUserService _userService;
-        public UsersController(IUserService userService)
+        private readonly ILoginService _loginService;
+
+        public LoginController(ILoginService loginService)
         {
-            _userService = userService;
+            _loginService = loginService;
         }
 
         [HttpPost]
@@ -25,21 +26,18 @@ namespace PT_Hiberus_API.Controllers
         {
             try
             {
-                var validateExistence = await _userService.ValidateExistence(user);
-                if (validateExistence)
-                {
-                    return BadRequest(new { message = "El usuario con el correo " + user.Email + " ya existe." });
-                }
                 user.Password = Encrypt.PasswordEncrypt(user.Password);
-                await _userService.Register(user);
-
-                return Ok(new { message = "Usuario registrado con éxito" });
+                var existence = await _loginService.Login(user);
+                if(existence == null)
+                {
+                    return BadRequest(new { message = "Correo o contraseña incorrectos" });
+                }
+                return Ok(new { message = "Usuario = XXX" });
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
     }
 }
